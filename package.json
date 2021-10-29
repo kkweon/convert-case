@@ -1,0 +1,29 @@
+{
+  "name": "convert-case",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/public/index.html",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkweon/convert-case.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkweon/convert-case/issues"
+  },
+  "homepage": "https://github.com/kkweon/convert-case#readme",
+  "devDependencies": {
+    "@parcel/transformer-elm": "^2.0.0",
+    "autoprefixer": "^10.4.0",
+    "elm": "^0.19.1-5",
+    "parcel": "^2.0.0",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.17"
+  }
+}
