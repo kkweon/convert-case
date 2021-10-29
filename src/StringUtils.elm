@@ -1,4 +1,11 @@
-module StringUtils exposing (cleanAndSplitText, toCamelCase, toHypenCase, toPascalCase, toUpperSnakeCase, toSnakeCase)
+module StringUtils exposing
+    ( cleanAndSplitText
+    , toCamelCase
+    , toHypenCase
+    , toPascalCase
+    , toSnakeCase
+    , toUpperSnakeCase
+    )
 
 import Set exposing (Set)
 
