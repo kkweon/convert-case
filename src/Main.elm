@@ -4,7 +4,6 @@
 module Main exposing (..)
 
 import Browser
-import Char exposing (toLower)
 import Html exposing (Html, div, input, label, option, select, text)
 import Html.Attributes exposing (class, selected, type_, value)
 import Html.Events exposing (onInput)
