@@ -21,7 +21,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - name: Deploy 🚀
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
