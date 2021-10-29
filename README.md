@@ -1,5 +1,7 @@
 # Convert Case
 
+[![CI](https://github.com/kkweon/convert-case/actions/workflows/ci.yaml/badge.svg)](https://github.com/kkweon/convert-case/actions/workflows/ci.yaml)
+
 Convert Case is a simple web application to quickly convert text to
 
 - [x] camelCase
