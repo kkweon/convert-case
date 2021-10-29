@@ -2,9 +2,9 @@
   "name": "convert-case",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "source": "src/public/index.html",
   "scripts": {
-    "start": "parcel src/public/index.html",
+    "start": "parcel",
     "build": "parcel build"
   },
   "repository": {

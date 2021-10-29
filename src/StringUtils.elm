@@ -1,7 +1,5 @@
 module StringUtils exposing (toCamelCase, toPascalCase)
 
-import Set exposing (Set)
-
 
 isAscii : Char -> Bool
 isAscii char =
