@@ -5,8 +5,8 @@ module Main exposing (..)
 
 import Browser
 import Char exposing (toLower)
-import Html exposing (Html, div, input, option, select, text)
-import Html.Attributes exposing (class, selected, value)
+import Html exposing (Html, div, input, label, option, select, text)
+import Html.Attributes exposing (class, selected, type_, value)
 import Html.Events exposing (onInput)
 import StringUtils exposing (toCamelCase, toHypenCase, toPascalCase, toSnakeCase, toUpperSnakeCase)
 
@@ -90,14 +90,15 @@ renderInput =
     let
         labelForInput : Html a
         labelForInput =
-            Html.label [ class "mr-4" ] [ text "Input text to convert" ]
+            label [ class "col-3" ] [ text "Input text to convert" ]
     in
     div
-        [ class "flex" ]
+        [ class "row mb-5" ]
         [ labelForInput
         , input
-            [ class "flex-grow border-2"
+            [ class "col"
             , onInput OnChange
+            , type_ "text"
             ]
             []
         ]
@@ -118,7 +119,7 @@ modeToString mode =
         ToUpperSnakeCase ->
             "To UPPER_SNAKE_CASE"
 
-        toSnakeCase ->
+        ToSnakeCase ->
             "To snake_case"
 
 
@@ -163,7 +164,7 @@ renderMenu model =
         menu : Html Msg
         menu =
             select
-                [ class "border-2"
+                [ class "col"
                 , onInput <|
                     \val ->
                         modeFromString val
@@ -177,12 +178,15 @@ renderMenu model =
                 , renderOption model.mode ToSnakeCase
                 ]
     in
-    div [] [ menu ]
+    div [ class "row mb-5" ]
+        [ label [ class "col-3" ] [ text "Options" ]
+        , menu
+        ]
 
 
 view : Model -> Html Msg
 view model =
-    div [ class "max-w-lg mx-auto pt-24 h-screen flex flex-col space-y-6" ]
+    div [ class "container pt-5" ]
         [ renderMenu model
         , renderInput
         , renderOutput model
