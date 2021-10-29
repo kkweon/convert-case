@@ -23,6 +23,16 @@ isUpperSnakeCase text =
     String.contains "_" text && String.toUpper text == text
 
 
+isFirstCharUpperCase : String -> Bool
+isFirstCharUpperCase text =
+    case String.uncons text of
+        Nothing ->
+            False
+
+        Just ( firstChar, _ ) ->
+            Char.isUpper firstChar
+
+
 breakString : String -> List String
 breakString text =
     if isUpperSnakeCase text then
@@ -30,6 +40,28 @@ breakString text =
 
     else
         let
+            -- When char is a upper char, it checks the previous word is
+            -- starting with an uppercase char. If so, it will append to the previous word.
+            -- For example, in the following example,
+            --
+            -- c = 'Y',
+            -- word = ""
+            -- words = ["TMP", "Experiments"]
+            --
+            -- it will be transformed to ("", ["YTMP", "Experiments"])
+            handleUpperCharCase : Char -> String -> List String -> ( String, List String )
+            handleUpperCharCase c word words =
+                case words of
+                    [] ->
+                        ( "", String.cons c word :: words )
+
+                    prevWord :: rest ->
+                        if isFirstCharUpperCase prevWord && String.isEmpty word then
+                            ( "", String.cons c prevWord :: rest )
+
+                        else
+                            ( "", String.cons c word :: words )
+
             ( currentWord, result ) =
                 String.foldr
                     (\c ( word, words ) ->
@@ -37,7 +69,7 @@ breakString text =
                             ( "", word :: words )
 
                         else if Char.isUpper c then
-                            ( "", String.cons c word :: words )
+                            handleUpperCharCase c word words
 
                         else
                             ( String.cons c word, words )

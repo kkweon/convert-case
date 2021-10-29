@@ -30,6 +30,9 @@ suite =
             , test "will break on _" <|
                 \_ ->
                     Expect.equal [ "abc", "def" ] (cleanAndSplitText "abc_def")
+            , test "will not break on upper case word" <|
+                \_ ->
+                    Expect.equal [ "YTMP", "Experiments" ] (cleanAndSplitText "YTMP Experiments")
             , test "will break on edge cases" <|
                 \_ ->
                     Expect.equal

@@ -107,37 +107,37 @@ modeToString : Mode -> String
 modeToString mode =
     case mode of
         ToCamelCase ->
-            "ToCamelCase"
+            "To camelCase"
 
         ToPascalCase ->
-            "ToPascalCase"
+            "To PascalCase"
 
         ToHypenCase ->
-            "ToHypenCase"
+            "To hypen-case"
 
         ToUpperSnakeCase ->
-            "ToUpperSnakeCase"
+            "To UPPER_SNAKE_CASE"
 
         toSnakeCase ->
-            "ToSnakeCase"
+            "To snake_case"
 
 
 modeFromString : String -> Maybe Mode
 modeFromString modeString =
     case modeString of
-        "ToCamelCase" ->
+        "To camelCase" ->
             Just ToCamelCase
 
-        "ToPascalCase" ->
+        "To PascalCase" ->
             Just ToPascalCase
 
-        "ToHypenCase" ->
+        "To hypen-case" ->
             Just ToHypenCase
 
-        "ToSnakeCase" ->
+        "To snake_case" ->
             Just ToSnakeCase
 
-        "ToUpperSnakeCase" ->
+        "To UPPER_SNAKE_CASE" ->
             Just ToUpperSnakeCase
 
         _ ->
