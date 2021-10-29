@@ -12,6 +12,9 @@ suite =
             [ test "will keep only ascii chars" <|
                 \_ ->
                     Expect.equal [ "abc" ] (cleanAndSplitText "abc$$")
+            , test "will keep numbers" <|
+                \_ ->
+                    Expect.equal [ "123" ] (cleanAndSplitText "123$$")
             , test "will break on space" <|
                 \_ ->
                     Expect.equal [ "abc", "def" ] (cleanAndSplitText "abc def")

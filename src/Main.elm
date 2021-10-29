@@ -4,10 +4,11 @@
 module Main exposing (..)
 
 import Browser
+import Char exposing (toLower)
 import Html exposing (Html, div, input, option, select, text)
 import Html.Attributes exposing (class, selected, value)
 import Html.Events exposing (onInput)
-import StringUtils exposing (toCamelCase, toPascalCase)
+import StringUtils exposing (toCamelCase, toHypenCase, toPascalCase, toSnakeCase, toUpperSnakeCase)
 
 
 main : Program () Model Msg
@@ -35,6 +36,9 @@ type alias Model =
 type Mode
     = ToCamelCase
     | ToPascalCase
+    | ToHypenCase
+    | ToSnakeCase
+    | ToUpperSnakeCase
 
 
 type Msg
@@ -61,20 +65,38 @@ transform mode inputText =
         ToPascalCase ->
             toPascalCase inputText
 
+        ToHypenCase ->
+            toHypenCase inputText
+
+        ToSnakeCase ->
+            toSnakeCase inputText
+
+        ToUpperSnakeCase ->
+            toUpperSnakeCase inputText
+
 
 renderOutput : Model -> Html a
 renderOutput model =
     div
-        []
-        [ model.text |> transform model.mode |> text ]
+        [ class "border-2 p-16 h-60" ]
+        [ model.text
+            |> transform model.mode
+            |> text
+        ]
 
 
 renderInput : Html Msg
 renderInput =
+    let
+        labelForInput : Html a
+        labelForInput =
+            Html.label [ class "mr-4" ] [ text "Input text to convert" ]
+    in
     div
-        [ class "flex justify-center" ]
-        [ input
-            [ class "border-2"
+        [ class "flex" ]
+        [ labelForInput
+        , input
+            [ class "flex-grow border-2"
             , onInput OnChange
             ]
             []
@@ -90,6 +112,15 @@ modeToString mode =
         ToPascalCase ->
             "ToPascalCase"
 
+        ToHypenCase ->
+            "ToHypenCase"
+
+        ToUpperSnakeCase ->
+            "ToUpperSnakeCase"
+
+        toSnakeCase ->
+            "ToSnakeCase"
+
 
 modeFromString : String -> Maybe Mode
 modeFromString modeString =
@@ -99,6 +130,15 @@ modeFromString modeString =
 
         "ToPascalCase" ->
             Just ToPascalCase
+
+        "ToHypenCase" ->
+            Just ToHypenCase
+
+        "ToSnakeCase" ->
+            Just ToSnakeCase
+
+        "ToUpperSnakeCase" ->
+            Just ToUpperSnakeCase
 
         _ ->
             Nothing
@@ -123,7 +163,8 @@ renderMenu model =
         menu : Html Msg
         menu =
             select
-                [ onInput <|
+                [ class "border-2"
+                , onInput <|
                     \val ->
                         modeFromString val
                             |> Maybe.withDefault model.mode
@@ -131,6 +172,9 @@ renderMenu model =
                 ]
                 [ renderOption model.mode ToCamelCase
                 , renderOption model.mode ToPascalCase
+                , renderOption model.mode ToHypenCase
+                , renderOption model.mode ToUpperSnakeCase
+                , renderOption model.mode ToSnakeCase
                 ]
     in
     div [] [ menu ]
@@ -138,7 +182,7 @@ renderMenu model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "max-w-lg mx-auto pt-24" ]
+    div [ class "max-w-lg mx-auto pt-24 h-screen flex flex-col space-y-6" ]
         [ renderMenu model
         , renderInput
         , renderOutput model

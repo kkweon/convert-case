@@ -1,4 +1,4 @@
-module StringUtils exposing (cleanAndSplitText, toCamelCase, toPascalCase)
+module StringUtils exposing (cleanAndSplitText, toCamelCase, toHypenCase, toPascalCase, toUpperSnakeCase, toSnakeCase)
 
 import Set exposing (Set)
 
@@ -49,7 +49,7 @@ breakString text =
 -}
 isImportant : Char -> Bool
 isImportant char =
-    Char.isAlpha char || Set.member char specialChars
+    Char.isAlphaNum char || Set.member char specialChars
 
 
 cleanAndSplitText : String -> List String
@@ -98,3 +98,23 @@ toPascalCase text =
     cleanAndSplitText text
         |> List.map (String.toLower >> firstCharToUpper)
         |> String.join ""
+
+
+toHypenCase : String -> String
+toHypenCase text =
+    cleanAndSplitText text
+        |> List.map String.toLower
+        |> String.join "-"
+
+
+toUpperSnakeCase : String -> String
+toUpperSnakeCase text =
+    toSnakeCase text
+        |> String.toUpper
+
+
+toSnakeCase : String -> String
+toSnakeCase text =
+    cleanAndSplitText text
+        |> List.map String.toLower
+        |> String.join "_"
