@@ -5,7 +5,8 @@
   "source": "src/public/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build --public-url '/convert-case/'"
+    "build": "parcel build --public-url '/convert-case/'",
+    "postbuild": "cp CNAME ./dist/"
   },
   "repository": {
     "type": "git",
