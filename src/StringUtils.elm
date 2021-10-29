@@ -1,17 +1,70 @@
-module StringUtils exposing (toCamelCase, toPascalCase)
+module StringUtils exposing (cleanAndSplitText, toCamelCase, toPascalCase)
+
+import Set exposing (Set)
 
 
-isAscii : Char -> Bool
-isAscii char =
-    Char.toCode char
-        |> (\x -> 0 <= x && x <= 127)
+{-| Important characters that should not be removed from the
+text while cleaning.
+-}
+specialChars : Set Char
+specialChars =
+    Set.fromList [ ' ', '-', '_' ]
 
 
-cleanText : String -> List String
-cleanText text =
+isUpperSnakeCase : String -> Bool
+isUpperSnakeCase text =
+    String.contains "_" text && String.toUpper text == text
+
+
+breakString : String -> List String
+breakString text =
+    if isUpperSnakeCase text then
+        String.split "_" text
+
+    else
+        let
+            ( currentWord, result ) =
+                String.foldr
+                    (\c ( word, words ) ->
+                        if Set.member c specialChars then
+                            ( "", word :: words )
+
+                        else if Char.isUpper c then
+                            ( "", String.cons c word :: words )
+
+                        else
+                            ( String.cons c word, words )
+                    )
+                    ( "", [] )
+                    text
+        in
+        if currentWord == "" then
+            result
+
+        else
+            currentWord :: result
+
+
+{-| Returns true if the character should be kept.
+-}
+isImportant : Char -> Bool
+isImportant char =
+    Char.isAlpha char || Set.member char specialChars
+
+
+cleanAndSplitText : String -> List String
+cleanAndSplitText text =
     text
-        |> String.filter isAscii
-        |> String.split " "
+        |> String.map
+            (\c ->
+                if isImportant c then
+                    c
+
+                else
+                    ' '
+            )
+        |> breakString
+        |> List.filter (\word -> String.isEmpty word |> not)
 
 
 firstCharMap : (Char -> Char) -> String -> String
@@ -42,6 +95,6 @@ toCamelCase text =
 
 toPascalCase : String -> String
 toPascalCase text =
-    cleanText text
-        |> List.map firstCharToUpper
+    cleanAndSplitText text
+        |> List.map (String.toLower >> firstCharToUpper)
         |> String.join ""

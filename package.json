@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build --public-url '/convert-case/'",
-    "postbuild": "cp CNAME ./dist/"
+    "postbuild": "cp CNAME ./dist/",
+    "test": "elm-test"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "@parcel/transformer-elm": "^2.0.0",
     "autoprefixer": "^10.4.0",
     "elm": "^0.19.1-5",
+    "elm-test": "^0.19.1-revision7",
     "parcel": "^2.0.0",
     "postcss": "^8.3.11",
     "tailwindcss": "^2.2.17"
